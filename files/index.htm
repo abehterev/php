@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>Files zone</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+<style type="text/css">
+BODY,HTML {
+	padding: 0px;
+	margin: 0px;
+}
+
+BODY {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	background: #EEE;
+	padding: 15px;
+}
+
+H1 {
+	font-family: Georgia, serif;
+	font-size: 20px;
+	font-weight: normal;
+}
+
+H2 {
+	font-family: Georgia, serif;
+	font-size: 16px;
+	font-weight: normal;
+	margin: 0px 0px 10px 0px;
+}
+
+.example {
+	float: left;
+	margin: 15px;
+}
+
+.fileBox {
+	width: 550px;
+	height: 500px;
+	border-top: solid 1px #BBB;
+	border-left: solid 1px #BBB;
+	border-bottom: solid 1px #FFF;
+	border-right: solid 1px #FFF;
+	background: #FFF;
+	overflow: scroll;
+	padding: 5px;
+}
+</style>
+
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/jquery.easing.js" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="js/jqueryFileTree.js" type="text/javascript"></script>
+<link href="css/jqueryFileTree.css" rel="stylesheet" type="text/css" media="screen" />
+
+<script src="js/hPlayer.js"></script>
+<link href="css/hPlayer.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+
+<script type="text/javascript">
+			
+$(document).ready( function() {
+	$('#fileTree').fileTree({
+		root: '/',
+		script: 'connectors/filelist.php',
+		folderEvent: 'click',
+		expandSpeed: 750,
+		collapseSpeed: 750,
+		multiFolder: false 
+		}, function(file) { 
+			//alert(file);
+			$('#urlboxtext').val('http://behterev.su/file2.php?id='+file);
+			//hPlayer.initConfiguration({width: '700',stream: $('#urlboxtext').val()});
+			//hPlayer.play();
+			}
+	);
+	$('#urlboxplay').click(function() {
+		//alert( "Handler for .click() called." );
+		if($('#urlboxtext').val().length==0){
+			alert("Can not play empty file!");
+		}else{
+			hPlayer.play({width: '700',stream: $('#urlboxtext').val()});
+		}
+	});
+});
+</script>
+
+</head>
+<body>
+<div style="position:relative;">
+	<div style="position:absolute;top:0px;left:0px;width:100%;">
+	<input id="urlboxtext" class="inputs" style="width:90%;" value="" type="text" readonly>
+	<input id="urlboxplay" class="inputs" style="width:90px;height:30px" type="button" value="Play">
+	</div>
+
+
+	<div style="position:absolute;top:34px;left:0px" id="fileTree" class="fileBox">
+	</div>
+
+	<div style="position:absolute;top:14px;left:600px" id="hPlayer">
+	</div>
+</div>
+<script type="text/javascript">
+        hPlayer.init({width: '700',stream: 'http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi'});
+</script>
+</body>
+</html>
